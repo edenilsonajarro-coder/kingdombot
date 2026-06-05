@@ -1,8 +1,8 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { configurarTickets } from "./Sistemas/tickets.js";
-import { configurarBienvenida } from "./sistemas/bienvenida.js";
-import { configurarSugerencias } from "./sistemas/sugerencias.js";
-import { configurarEncuestas } from "./sistemas/encuestas.js";
+import { configurarBienvenida } from "./Sistemas/bienvenida.js";
+import { configurarSugerencias } from "./Sistemas/sugerencias.js";
+import { configurarEncuestas } from "./Sistemas/encuestas.js";
 import "dotenv/config";
 
 const client = new Client({
