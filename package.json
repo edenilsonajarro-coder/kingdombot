@@ -1,0 +1,14 @@
+{
+  "name": "mi-bot-discord",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.0",
+    "discord.js": "latest",
+    "dotenv": "latest"
+  }
+}
