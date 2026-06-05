@@ -1,5 +1,5 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import { configurarTickets } from "./sistemas/tickets.js";
+import { configurarTickets } from "./Sistemas/tickets.js";
 import { configurarBienvenida } from "./sistemas/bienvenida.js";
 import { configurarSugerencias } from "./sistemas/sugerencias.js";
 import { configurarEncuestas } from "./sistemas/encuestas.js";
