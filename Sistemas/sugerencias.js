@@ -78,6 +78,7 @@ if (message.content.startsWith("!sugerencia ")) {
   }
 
   const datos = cargarDatos();
+  console.log("📂 Datos cargados:", datos);
 
   datos.ultimoId++;
 
@@ -91,7 +92,7 @@ if (message.content.startsWith("!sugerencia ")) {
     estado: "pendiente",
     fecha: new Date().toISOString(),
   };
-  
+  console.log("💾 Guardando ID:", id);
   function guardarDatos(datos) {
   try {
     fs.writeFileSync(
