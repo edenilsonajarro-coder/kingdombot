@@ -300,7 +300,7 @@ if (message.content.startsWith("!rechazar ")) {
           `💡 **Una sugerencia de la comunidad ha sido rechazada.**\n\n` +
             `👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
             `📝 **Sugerencia:**\n${sugerencia.texto}\n\n` +
-          ¡  `📌 **Razón:**\n${razon}`
+           `📌 **Razón:**\n${razon}`
         )
         .addFields({
           name: "Estado",
@@ -322,8 +322,7 @@ if (message.content.startsWith("!rechazar ")) {
   );
 
   return;
-}
-```
+  }
 
-});
+  });
 }
