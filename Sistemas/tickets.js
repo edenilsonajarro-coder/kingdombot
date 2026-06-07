@@ -192,7 +192,7 @@ if (canalLogs) {
       .setTitle("🔒 Ticket Cerrado")
       .addFields(
         {
-          name: "🔨 Cerrado por",
+          name: "👮 Staff",
           value: interaction.user.tag,
           inline: true,
         },
@@ -200,6 +200,11 @@ if (canalLogs) {
           name: "📂 Ticket",
           value: interaction.channel.name,
           inline: true,
+        }
+        {
+          name: "🆔 Staff ID",
+          value: interaction.user.id,
+          inline: false,
         }
       )
       .setTimestamp();
