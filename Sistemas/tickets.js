@@ -10,6 +10,7 @@ import fs from "node:fs";
 
 const ROL_STAFF_ID = "1512172390547984404";
 const CATEGORIA_TICKETS_ID = "1512096548388081674";
+const CANAL_LOGS_TICKETS_ID = "1513187004219920526";
 
 const ARCHIVO_CONTADOR = "./contador-tickets.json";
 
