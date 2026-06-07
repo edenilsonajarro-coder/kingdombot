@@ -134,20 +134,22 @@ return;
       guardarDatos(datos);
 
       const embedActualizacion = new EmbedBuilder()
-        .setColor("#2ecc71")
-        .setTitle("📌 Actualizacion futura")
-        .setDescription(
-          "💡 **Sugerencia implementada**\n\n" +
-            `**Autor:** <@${sugerencia.autorId}>\n\n` +
-            sugerencia.texto
-        )
-        .setFooter({ text: `Sugerencia #${id}` })
-        .setTimestamp();
-
-      await canalActualizaciones.send({ embeds: [embedActualizacion] });
-
-      await message.reply(`Sugerencia #${id} aprobada y publicada.`);
-      return;
+  .setColor("#2ecc71")
+  .setTitle("✅ Sugerencia Aprobada")
+  .setDescription(
+    `💡 **Una sugerencia de la comunidad ha sido aceptada.**\n\n` +
+    `👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
+    `📝 **Sugerencia:**\n${sugerencia.texto}`
+  )
+  .addFields({
+    name: "📌 Estado",
+    value: "🟢 Aprobada",
+    inline: true,
+  })
+  .setFooter({
+    text: `Kingdom SV • Sugerencia #${id}`,
+  })
+  .setTimestamp();
     }
 
     if (message.content.startsWith("!rechazar ")) {
