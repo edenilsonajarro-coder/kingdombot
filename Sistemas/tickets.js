@@ -21,7 +21,7 @@ function obtenerNumeroTicket() {
     datos = JSON.parse(fs.readFileSync(ARCHIVO_CONTADOR, "utf8"));
   }
 
-  datos.ultimoTicket += 0;
+ datos.ultimoTicket++;
   fs.writeFileSync(ARCHIVO_CONTADOR, JSON.stringify(datos, null, 2));
 
   return datos.ultimoTicket;
@@ -132,6 +132,40 @@ export function configurarTickets(client) {
         embeds: [embedTicket],
         components: [botonCerrar],
       });
+
+      const canalLogs = guild.channels.cache.get(
+  CANAL_LOGS_TICKETS_ID
+);
+
+console.log("Canal logs:", canalLogs?.name);
+
+if (canalLogs) {
+  const embedLog = new EmbedBuilder()
+    .setColor("#2ecc71")
+    .setTitle("🎫 Ticket Creado")
+    .addFields(
+      {
+        name: "👤 Usuario",
+        value: usuario.tag,
+        inline: true,
+      },
+      {
+        name: "🆔 ID",
+        value: usuario.id,
+        inline: true,
+      },
+      {
+        name: "📂 Ticket",
+        value: canalTicket.name,
+        inline: false,
+      }
+    )
+    .setTimestamp();
+
+  await canalLogs.send({
+    embeds: [embedLog],
+  });
+}
 
       await interaction.reply({
         content: `Tu ticket fue creado: ${canalTicket}`,
