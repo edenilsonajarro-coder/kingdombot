@@ -4,7 +4,7 @@ import fs from "node:fs";
 const CANAL_SUGERENCIAS_ID = "1512319750179389550";
 const CANAL_ACTUALIZACIONES_ID = "1512320969216229466";
 
-const ARCHIVO_SUGERENCIAS = "./sugerencias.json";
+const ARCHIVO_SUGERENCIAS = ".sugerencias.json";
 
 function cargarDatos() {
   if (!fs.existsSync(ARCHIVO_SUGERENCIAS)) {
@@ -26,6 +26,8 @@ function esStaff(message) {
 }
 
 export function configurarSugerencias(client) {
+
+
   client.on("messageCreate", async (message) => {
     if (message.author.bot) return;
 
