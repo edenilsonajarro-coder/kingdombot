@@ -181,8 +181,8 @@ if (canalLogs) {
         ephemeral: true,
       });
     }
-
-    if (interaction.customId === "reclamar_ticket") {
+    
+if (interaction.customId === "reclamar_ticket") {
 
   if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
     return interaction.reply({
@@ -190,14 +190,19 @@ if (canalLogs) {
       ephemeral: true,
     });
   }
-  if (interaction.channel.topic?.includes("reclamado-")) {
-  const reclamadoPor = interaction.channel.topic.split("reclamado-")[1];
 
-  return interaction.reply({
-    content: `❌ Este ticket ya fue reclamado por <@${reclamadoPor}>.`,
-    ephemeral: true,
-  });
-}
+  if (interaction.channel.topic?.includes("reclamado-")) {
+    const reclamadoPor = interaction.channel.topic.split("reclamado-")[1];
+
+    return interaction.reply({
+      content: `❌ Este ticket ya fue reclamado por <@${reclamadoPor}>.`,
+      ephemeral: true,
+    });
+  }
+
+  await interaction.channel.setTopic(
+    `${interaction.channel.topic}|reclamado-${interaction.user.id}`
+  );
 
   const embedReclamado = new EmbedBuilder()
     .setColor("#3498db")
@@ -244,8 +249,9 @@ if (canalLogs) {
   });
 }
 
-    if (interaction.customId === "cerrar_ticket") {
-  if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
+  if (interaction.customId === "cerrar_ticket") {
+ 
+   if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
     return interaction.reply({
       content: "Solo el staff puede cerrar tickets.",
       ephemeral: true,
@@ -314,9 +320,10 @@ if (canalLogs) {
     "🔒 Este ticket se cerrará en 5 segundos."
   );
 
-  setTimeout(() => {
+   setTimeout(() => {
     interaction.channel.delete().catch(() => {});
   }, 5000);
 }
-  });
+
+});
 }
