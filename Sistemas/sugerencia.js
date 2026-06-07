@@ -19,6 +19,7 @@ return JSON.parse(
 fs.readFileSync(ARCHIVO_SUGERENCIAS, "utf8")
 );
 } catch {
+  
 return {
 ultimoId: 0,
 sugerencias: {},
@@ -293,14 +294,13 @@ if (message.content.startsWith("!rechazar ")) {
     const embed =
       new EmbedBuilder()
         .setColor("#e74c3c")
-        .setTitle(
-          "❌ Sugerencia Rechazada"
-        )
+        .setTitle("❌ Sugerencia Rechazada")
+
         .setDescription(
-          `💡 **Una sugerencia de la comunidad ha sido rechazada.**\n\n` +
-            `👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
-            `📝 **Sugerencia:**\n${sugerencia.texto}\n\n` +
-           `📌 **Razón:**\n${razon}`
+        `💡 **Una sugerencia de la comunidad ha sido rechazada.**\n\n` +
+        `👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
+        `📝 **Sugerencia:**\n${sugerencia.texto}\n\n` +
+       `📌 **Razón:**\n${razon}`
         )
         .addFields({
           name: "Estado",
@@ -317,7 +317,7 @@ if (message.content.startsWith("!rechazar ")) {
     });
   }
 
-  await message.reply(
+    await message.reply(
     `❌ La sugerencia #${id} fue rechazada y publicada en actualizaciones.`
   );
 
