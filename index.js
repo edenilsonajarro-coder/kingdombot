@@ -35,6 +35,11 @@ client.on("messageCreate", async (message) => {
     );
   }
 });
+
+console.log(
+  "ULTIMOS 5:",
+  process.env.DISCORD_TOKEN?.slice(-5)
+);
 console.log("=== DEBUG RAILWAY ===");
 console.log("TOKEN EXISTE:", !!process.env.DISCORD_TOKEN);
 console.log("LONGITUD:", process.env.DISCORD_TOKEN?.length);
