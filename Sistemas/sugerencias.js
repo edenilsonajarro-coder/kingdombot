@@ -3,6 +3,7 @@ import fs from "node:fs";
 
 const CANAL_SUGERENCIAS_ID = "1512319750179389550";
 const CANAL_ACTUALIZACIONES_ID = "1512320969216229466";
+const CANAL_LOGS_SUGERENCIAS_ID = "1513186658537836555";
 
 const ARCHIVO_SUGERENCIAS = "./sugerencias.json";
 
@@ -109,6 +110,32 @@ if (message.content.startsWith("!sugerencia ")) {
 
   guardarDatos(datos);
 
+   const canalLogs = message.guild.channels.cache.get(
+   CANAL_LOGS_SUGERENCIAS_ID
+   );
+
+   if (canalLogs) {
+     const embedLog = new EmbedBuilder()
+     .setColor("#3498db")
+     .setTitle(`📋 Nueva sugerencia #${id}`)
+     .addFields(
+      {
+        name: "👤 Usuario",
+        value: `${message.author.tag}`,
+      },
+      {
+        name: "🆔 ID",
+        value: `${message.author.id}`,
+      }
+    )
+    .setDescription(texto)
+    .setTimestamp();
+
+      await canalLogs.send({
+        embeds: [embedLog],
+      });
+     }
+
   const embed = new EmbedBuilder()
     .setColor("#f1c40f")
     .setTitle(`💡 Sugerencia #${id}`)
@@ -199,6 +226,16 @@ if (message.content.startsWith("!aprobar ")) {
     new Date().toISOString();
 
   guardarDatos(datos);
+
+  const canalLogs = message.guild.channels.cache.get(
+  CANAL_LOGS_SUGERENCIAS_ID
+);
+
+if (canalLogs) {
+  await canalLogs.send(
+    `✅ Sugerencia #${id} aprobada por ${message.author.tag}`
+  );
+}
 
   const canalActualizaciones =
     message.guild.channels.cache.get(
@@ -307,6 +344,15 @@ if (message.content.startsWith("!rechazar ")) {
 
   guardarDatos(datos);
 
+  const canalLogs = message.guild.channels.cache.get(
+  CANAL_LOGS_SUGERENCIAS_ID
+);
+
+if (canalLogs) {
+  await canalLogs.send(
+    `❌ Sugerencia #${id} rechazada por ${message.author.tag}\n📌 Razón: ${razon}`
+  );
+}
   const canalActualizaciones =
     message.guild.channels.cache.get(
       CANAL_ACTUALIZACIONES_ID
