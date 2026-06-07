@@ -1,5 +1,6 @@
 import {
   ActionRowBuilder,
+  AttachmentBuilder,
   ButtonBuilder,
   ButtonStyle,
   ChannelType,
@@ -200,7 +201,7 @@ if (canalLogs) {
           name: "📂 Ticket",
           value: interaction.channel.name,
           inline: true,
-        }
+        },
         {
           name: "🆔 Staff ID",
           value: interaction.user.id,
@@ -213,6 +214,32 @@ if (canalLogs) {
       embeds: [embedLog],
     });
   }
+
+  const mensajes = await interaction.channel.messages.fetch({
+  limit: 100,
+});
+
+const transcripcion = [...mensajes.values()]
+  .reverse()
+  .map(
+    (msg) =>
+      `[${msg.createdAt.toLocaleString()}] ${msg.author.tag}: ${msg.content}`
+  )
+  .join("\n");
+
+const archivo = new AttachmentBuilder(
+  Buffer.from(transcripcion, "utf8"),
+  {
+    name: `transcripcion-${interaction.channel.name}.txt`,
+  }
+);
+
+if (canalLogs) {
+  await canalLogs.send({
+    content: `📄 Transcripción de ${interaction.channel.name}`,
+    files: [archivo],
+  });
+}
 
   await interaction.reply(
     "🔒 Este ticket se cerrará en 5 segundos."
