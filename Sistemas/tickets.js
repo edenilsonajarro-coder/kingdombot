@@ -138,6 +138,7 @@ export function configurarTickets(client) {
 );
 
 console.log("Canal logs:", canalLogs?.name);
+console.log("ID buscado:", CANAL_LOGS_TICKETS_ID);
 
 if (canalLogs) {
   const embedLog = new EmbedBuilder()
@@ -174,18 +175,47 @@ if (canalLogs) {
     }
 
     if (interaction.customId === "cerrar_ticket") {
-      if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
-        return interaction.reply({
-          content: "Solo el staff puede cerrar tickets.",
-          ephemeral: true,
-        });
-      }
+  if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
+    return interaction.reply({
+      content: "Solo el staff puede cerrar tickets.",
+      ephemeral: true,
+    });
+  }
 
-      await interaction.reply("Este ticket se cerrara en 5 segundos.");
+  const canalLogs = interaction.guild.channels.cache.get(
+    CANAL_LOGS_TICKETS_ID
+  );
 
-      setTimeout(() => {
-        interaction.channel.delete().catch(() => {});
-      }, 5000);
-    }
+  if (canalLogs) {
+    const embedLog = new EmbedBuilder()
+      .setColor("#e74c3c")
+      .setTitle("🔒 Ticket Cerrado")
+      .addFields(
+        {
+          name: "🔨 Cerrado por",
+          value: interaction.user.tag,
+          inline: true,
+        },
+        {
+          name: "📂 Ticket",
+          value: interaction.channel.name,
+          inline: true,
+        }
+      )
+      .setTimestamp();
+
+    await canalLogs.send({
+      embeds: [embedLog],
+    });
+  }
+
+  await interaction.reply(
+    "🔒 Este ticket se cerrará en 5 segundos."
+  );
+
+  setTimeout(() => {
+    interaction.channel.delete().catch(() => {});
+  }, 5000);
+}
   });
 }
