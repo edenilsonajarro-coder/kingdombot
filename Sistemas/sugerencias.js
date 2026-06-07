@@ -28,11 +28,18 @@ sugerencias: {},
 }
 
 function guardarDatos(datos) {
-fs.writeFileSync(
-ARCHIVO_SUGERENCIAS,
-JSON.stringify(datos, null, 2)
-);
+  try {
+    fs.writeFileSync(
+      ARCHIVO_SUGERENCIAS,
+      JSON.stringify(datos, null, 2)
+    );
+
+    console.log("✅ Sugerencia guardada");
+  } catch (error) {
+    console.error("❌ ERROR AL GUARDAR:", error);
+  }
 }
+console.log("Intentando guardar sugerencia:", datos);
 
 function esStaff(message) {
 return message.member.permissions.has(
@@ -84,6 +91,20 @@ if (message.content.startsWith("!sugerencia ")) {
     estado: "pendiente",
     fecha: new Date().toISOString(),
   };
+  
+  function guardarDatos(datos) {
+  try {
+    fs.writeFileSync(
+      ARCHIVO_SUGERENCIAS,
+      JSON.stringify(datos, null, 2)
+    );
+
+    console.log("✅ Sugerencia guardada");
+  } catch (error) {
+    console.error("❌ ERROR AL GUARDAR:", error);
+  }
+}
+console.log("Intentando guardar sugerencia:", datos);
 
   guardarDatos(datos);
 
