@@ -133,7 +133,7 @@ return;
 
       guardarDatos(datos);
 
-      const embedActualizacion = new EmbedBuilder()
+   const embedActualizacion = new EmbedBuilder()
   .setColor("#2ecc71")
   .setTitle("✅ Sugerencia Aprobada")
   .setDescription(
@@ -150,6 +150,13 @@ return;
     text: `Kingdom SV • Sugerencia #${id}`,
   })
   .setTimestamp();
+
+      await message.reply(
+  `✅ La sugerencia #${id} fue aprobada y publicada en actualizaciones.`
+);
+
+      await message.reply(`Sugerencia #${id} aprobada y publicada.`);
+      return;
     }
 
     if (message.content.startsWith("!rechazar ")) {
