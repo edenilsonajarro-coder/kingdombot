@@ -39,7 +39,7 @@ function guardarDatos(datos) {
     console.error("❌ ERROR AL GUARDAR:", error);
   }
 }
-console.log("Intentando guardar sugerencia:", datos);
+
 
 function esStaff(message) {
 return message.member.permissions.has(
@@ -104,7 +104,7 @@ if (message.content.startsWith("!sugerencia ")) {
     console.error("❌ ERROR AL GUARDAR:", error);
   }
 }
-console.log("Intentando guardar sugerencia:", datos);
+
 
   guardarDatos(datos);
 
