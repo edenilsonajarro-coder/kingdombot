@@ -43,7 +43,7 @@ export function configurarSugerencias(client) {
       }
 
       const datos = cargarDatos();
-      datos.ultimoId += 1;
+      datos.ultimoId++;
 
       const id = datos.ultimoId;
 
@@ -58,31 +58,44 @@ export function configurarSugerencias(client) {
       guardarDatos(datos);
 
       const embed = new EmbedBuilder()
-        .setColor("#f1c40f")
-        .setTitle(`Nueva sugerencia #${id}`)
-        .setDescription(texto)
-        .addFields({
-          name: "Enviada por",
-          value: `${message.author}`,
-        })
-        .setThumbnail(message.author.displayAvatarURL({ size: 256 }))
-        .setTimestamp();
+  .setColor("#f1c40f")
+  .setTitle(`💡 Sugerencia #${id}`)
+  .setDescription(texto)
+  .addFields(
+    {
+      name: "👤 Autor",
+      value: `${message.author}`,
+      inline: true,
+    },
+    {
+      name: "📌 Estado",
+      value: "🟡 Pendiente",
+      inline: true,
+    }
+  )
+  .setThumbnail(message.author.displayAvatarURL({ size: 256 }))
+  .setFooter({
+    text: "KingdomBot • Sistema de Sugerencias",
+  })
+  .setTimestamp();
 
-      const sugerencia = await canal.send({ embeds: [embed] });
+const sugerencia = await canal.send({
+  embeds: [embed],
+});
 
-      await sugerencia.react("✅");
-      await sugerencia.react("❌");
+await sugerencia.react("👍");
+await sugerencia.react("👎");
 
-      const aviso = await message.reply(
-        `Tu sugerencia fue enviada correctamente con el numero #${id}.`
-      );
+const aviso = await message.reply(
+  `✅ Tu sugerencia fue enviada correctamente con el número **#${id}**.`
+);
 
-      setTimeout(() => {
-        message.delete().catch(() => {});
-        aviso.delete().catch(() => {});
-      }, 3000);
+setTimeout(() => {
+  message.delete().catch(() => {});
+  aviso.delete().catch(() => {});
+}, 3000);
 
-      return;
+return;
     }
 
     if (message.content.startsWith("!aprobar ")) {
