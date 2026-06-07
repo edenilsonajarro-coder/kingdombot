@@ -35,5 +35,6 @@ client.on("messageCreate", async (message) => {
     );
   }
 });
-
+console.log("TOKEN EXISTE:", !!process.env.DISCORD_TOKEN);
+console.log("LONGITUD:", process.env.DISCORD_TOKEN?.length);
 client.login(process.env.DISCORD_TOKEN);
