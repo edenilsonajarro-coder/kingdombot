@@ -99,123 +99,149 @@ return;
     }
 
     if (message.content.startsWith("!aprobar ")) {
-      if (!esStaff(message)) {
-        return message.reply("Solo administradores pueden aprobar sugerencias.");
-      }
+if (!esStaff(message)) {
+return message.reply("Solo administradores pueden aprobar sugerencias.");
+}
 
-      const id = message.content.replace("!aprobar ", "").trim();
-      const datos = cargarDatos();
-      const sugerencia = datos.sugerencias[id];
+const id = message.content.replace("!aprobar ", "").trim();
+const datos = cargarDatos();
+const sugerencia = datos.sugerencias[id];
 
-      if (!sugerencia) {
-        return message.reply("No encontre una sugerencia con ese numero.");
-      }
+if (!sugerencia) {
+return message.reply("No encontre una sugerencia con ese numero.");
+}
 
-      if (sugerencia.estado === "aprobada") {
-        return message.reply("Esa sugerencia ya fue aprobada.");
-      }
+if (sugerencia.estado === "aprobada") {
+return message.reply("Esa sugerencia ya fue aprobada.");
+}
 
-      if (sugerencia.estado === "rechazada") {
-        return message.reply("Esa sugerencia ya fue rechazada.");
-      }
+if (sugerencia.estado === "rechazada") {
+return message.reply("Esa sugerencia ya fue rechazada.");
+}
 
-      const canalActualizaciones = message.guild.channels.cache.get(
-        CANAL_ACTUALIZACIONES_ID
-      );
-
-      if (!canalActualizaciones) {
-        return message.reply("No encontre el canal de actualizaciones.");
-      }
-
-      sugerencia.estado = "aprobada";
-      sugerencia.aprobadaPor = message.author.id;
-      sugerencia.aprobadaEn = new Date().toISOString();
-
-      guardarDatos(datos);
-
-   const embedActualizacion = new EmbedBuilder()
-  .setColor("#2ecc71")
-  .setTitle("✅ Sugerencia Aprobada")
-  .setDescription(
-    `💡 **Una sugerencia de la comunidad ha sido aceptada.**\n\n` +
-    `👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
-    `📝 **Sugerencia:**\n${sugerencia.texto}`
-  )
-  .addFields({
-    name: "📌 Estado",
-    value: "🟢 Aprobada",
-    inline: true,
-  })
-  .setFooter({
-    text: `Kingdom SV • Sugerencia #${id}`,
-  })
-  .setTimestamp();
-
-      await message.reply(
-  `✅ La sugerencia #${id} fue aprobada y publicada en actualizaciones.`
+const canalActualizaciones = message.guild.channels.cache.get(
+CANAL_ACTUALIZACIONES_ID
 );
 
-      await message.reply(`Sugerencia #${id} aprobada y publicada.`);
-      return;
-    }
+if (!canalActualizaciones) {
+return message.reply("No encontre el canal de actualizaciones.");
+}
+
+sugerencia.estado = "aprobada";
+sugerencia.aprobadaPor = message.author.id;
+sugerencia.aprobadaEn = new Date().toISOString();
+
+guardarDatos(datos);
+
+const embedActualizacion = new EmbedBuilder()
+.setColor("#2ecc71")
+.setTitle("✅ Sugerencia Aprobada")
+.setDescription(
+`💡 **Una sugerencia de la comunidad ha sido aceptada.**\n\n` +
+`👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
+`📝 **Sugerencia:**\n${sugerencia.texto}`
+)
+.addFields({
+name: "📌 Estado",
+value: "🟢 Aprobada",
+inline: true,
+})
+.setFooter({
+text: `Kingdom SV • Sugerencia #${id}`,
+})
+.setTimestamp();
+
+await canalActualizaciones.send({
+embeds: [embedActualizacion],
+});
+
+await message.reply(
+`✅ La sugerencia #${id} fue aprobada y publicada en actualizaciones.`
+);
+
+return;
+}
 
     if (message.content.startsWith("!rechazar ")) {
-      if (!esStaff(message)) {
-        return message.reply("Solo administradores pueden rechazar sugerencias.");
-      }
+if (!esStaff(message)) {
+return message.reply("Solo administradores pueden rechazar sugerencias.");
+}
 
-      const contenido = message.content.replace("!rechazar ", "").trim();
-      const partes = contenido.split(" ");
-      const id = partes.shift();
-      const razon = partes.join(" ").trim();
+const contenido = message.content.replace("!rechazar ", "").trim();
+const partes = contenido.split(" ");
+const id = partes.shift();
+const razon = partes.join(" ").trim();
 
-      if (!id) {
-        return message.reply("Uso correcto: `!rechazar numero razon`");
-      }
+if (!id) {
+return message.reply("Uso correcto: !rechazar numero razon");
+}
 
-      if (!razon) {
-        return message.reply("Debes escribir una razon para rechazar la sugerencia.");
-      }
+if (!razon) {
+return message.reply(
+"Debes escribir una razon para rechazar la sugerencia."
+);
+}
 
-      const datos = cargarDatos();
-      const sugerencia = datos.sugerencias[id];
+const datos = cargarDatos();
+const sugerencia = datos.sugerencias[id];
 
-      if (!sugerencia) {
-        return message.reply("No encontre una sugerencia con ese numero.");
-      }
+if (!sugerencia) {
+return message.reply("No encontre una sugerencia con ese numero.");
+}
 
-      if (sugerencia.estado === "aprobada") {
-        return message.reply("Esa sugerencia ya fue aprobada.");
-      }
+if (sugerencia.estado === "aprobada") {
+return message.reply("Esa sugerencia ya fue aprobada.");
+}
 
-      if (sugerencia.estado === "rechazada") {
-        return message.reply("Esa sugerencia ya fue rechazada.");
-      }
+if (sugerencia.estado === "rechazada") {
+return message.reply("Esa sugerencia ya fue rechazada.");
+}
 
-      sugerencia.estado = "rechazada";
-      sugerencia.rechazadaPor = message.author.id;
-      sugerencia.rechazadaEn = new Date().toISOString();
-      sugerencia.razonRechazo = razon;
+sugerencia.estado = "rechazada";
+sugerencia.rechazadaPor = message.author.id;
+sugerencia.rechazadaEn = new Date().toISOString();
+sugerencia.razonRechazo = razon;
 
-      guardarDatos(datos);
+guardarDatos(datos);
 
-      const canalSugerencias = message.guild.channels.cache.get(CANAL_SUGERENCIAS_ID);
+const canalActualizaciones = message.guild.channels.cache.get(
+CANAL_ACTUALIZACIONES_ID
+);
 
-      if (canalSugerencias) {
-        const embedRechazo = new EmbedBuilder()
-          .setColor("#e74c3c")
-          .setTitle(`Sugerencia #${id} rechazada`)
-          .setDescription(
-            `**Autor:** <@${sugerencia.autorId}>\n\n` +
-              `**Sugerencia:**\n${sugerencia.texto}\n\n` +
-              `**Razon:**\n${razon}`
-          )
-          .setTimestamp();
+if (canalActualizaciones) {
+const embedRechazo = new EmbedBuilder()
+.setColor("#e74c3c")
+.setTitle("❌ Sugerencia Rechazada")
+.setDescription(
+`💡 **Una sugerencia de la comunidad ha sido rechazada.**\n\n` +
+`👤 **Autor:** <@${sugerencia.autorId}>\n\n` +
+`📝 **Sugerencia:**\n${sugerencia.texto}\n\n` +
+`📌 **Razón:**\n${razon}`
+)
+.addFields({
+name: "Estado",
+value: "🔴 Rechazada",
+inline: true,
+})
+.setFooter({
+text: `Kingdom SV • Sugerencia #${id}`,
+})
+.setTimestamp();
 
-        await canalSugerencias.send({ embeds: [embedRechazo] });
-      }
 
-      await message.reply(`Sugerencia #${id} rechazada.`);
-    }
+await canalActualizaciones.send({
+  embeds: [embedRechazo],
+});
+
+
+}
+
+await message.reply(
+`❌ La sugerencia #${id} fue rechazada y publicada en actualizaciones.`
+);
+
+return;
+}
+
   });
 }
