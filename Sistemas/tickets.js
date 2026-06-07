@@ -190,6 +190,14 @@ if (canalLogs) {
       ephemeral: true,
     });
   }
+  if (interaction.channel.topic?.includes("reclamado-")) {
+  const reclamadoPor = interaction.channel.topic.split("reclamado-")[1];
+
+  return interaction.reply({
+    content: `❌ Este ticket ya fue reclamado por <@${reclamadoPor}>.`,
+    ephemeral: true,
+  });
+}
 
   const embedReclamado = new EmbedBuilder()
     .setColor("#3498db")
