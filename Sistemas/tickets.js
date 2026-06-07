@@ -121,17 +121,24 @@ export function configurarTickets(client) {
             "Describe tu problema y espera a que el staff te responda."
         );
 
-      const botonCerrar = new ActionRowBuilder().addComponents(
-        new ButtonBuilder()
-          .setCustomId("cerrar_ticket")
-          .setLabel("Cerrar ticket")
-          .setStyle(ButtonStyle.Danger)
-      );
+      const botonesTicket = new ActionRowBuilder().addComponents(
+  new ButtonBuilder()
+    .setCustomId("reclamar_ticket")
+    .setLabel("Reclamar")
+    .setEmoji("🙋")
+    .setStyle(ButtonStyle.Success),
+
+  new ButtonBuilder()
+    .setCustomId("cerrar_ticket")
+    .setLabel("Cerrar ticket")
+    .setEmoji("🔒")
+    .setStyle(ButtonStyle.Danger)
+);
 
       await canalTicket.send({
         content: `${usuario} <@&${ROL_STAFF_ID}>`,
         embeds: [embedTicket],
-        components: [botonCerrar],
+        components: [botonesTicket],
       });
 
       const canalLogs = guild.channels.cache.get(
@@ -174,6 +181,60 @@ if (canalLogs) {
         ephemeral: true,
       });
     }
+
+    if (interaction.customId === "reclamar_ticket") {
+
+  if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
+    return interaction.reply({
+      content: "Solo el staff puede reclamar tickets.",
+      ephemeral: true,
+    });
+  }
+
+  const embedReclamado = new EmbedBuilder()
+    .setColor("#3498db")
+    .setTitle("🙋 Ticket Reclamado")
+    .setDescription(
+      `Este ticket ahora está siendo atendido por ${interaction.user}.`
+    )
+    .setTimestamp();
+
+  await interaction.channel.send({
+    embeds: [embedReclamado],
+  });
+
+  const canalLogs = interaction.guild.channels.cache.get(
+    CANAL_LOGS_TICKETS_ID
+  );
+
+  if (canalLogs) {
+    const embedLog = new EmbedBuilder()
+      .setColor("#3498db")
+      .setTitle("🙋 Ticket Reclamado")
+      .addFields(
+        {
+          name: "👮 Staff",
+          value: interaction.user.tag,
+          inline: true,
+        },
+        {
+          name: "📂 Ticket",
+          value: interaction.channel.name,
+          inline: true,
+        }
+      )
+      .setTimestamp();
+
+    await canalLogs.send({
+      embeds: [embedLog],
+    });
+  }
+
+  return interaction.reply({
+    content: "✅ Ticket reclamado.",
+    ephemeral: true,
+  });
+}
 
     if (interaction.customId === "cerrar_ticket") {
   if (!interaction.member.roles.cache.has(ROL_STAFF_ID)) {
